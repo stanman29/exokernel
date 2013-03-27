@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 1997 Massachusetts Institute of Technology 
  *
@@ -86,13 +85,17 @@
  *	#endif
  */
 #define	_BSD_CLOCK_T_	unsigned long		/* clock() */
-#define	_BSD_PTRDIFF_T_	int			/* ptr1 - ptr2 */
+#define	_BSD_PTRDIFF_T_	int			      /* ptr1 - ptr2 */
 #define	_BSD_SIZE_T_	unsigned int		/* sizeof() */
-#define	_BSD_SSIZE_T_	int			/* byte count or error */
-#define	_BSD_TIME_T_	int			/* time() */
-#define	_BSD_VA_LIST_	char *			/* va_list */
-#define _BSD_CLOCKID_T_	int
-#define _BSD_TIMER_T_	int
+#define	_BSD_SSIZE_T_	int			        /* byte count or error */
+#define	_BSD_TIME_T_	int			        /* time() */
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define  _BSD_VA_LIST_		__builtin_va_list	/* va_list */
+#else
+#define _BSD_VA_LIST_   char *        /* default va_list */
+#endif
+#define	_BSD_CLOCKID_T_		int		      /* clockid_t */
+#define	_BSD_TIMER_T_		int		        /* timer_t */
 
 /*
  * Runes (wchar_t) is declared to be an ``int'' instead of the more natural
@@ -108,8 +111,15 @@
  * and rune_t are typedef'd, _WCHAR_T_ will be undef'd, but _RUNE_T remains
  * defined for ctype.h.
  */
-#define	_BSD_WCHAR_T_	int			/* wchar_t */
-#define _BSD_WINT_T_	int			/* wint_t */
-#define	_BSD_RUNE_T_	int			/* rune_t */
+#define	_BSD_WCHAR_T_	int			      /* wchar_t */
+#define _BSD_WINT_T_	int			      /* wint_t */
+#define	_BSD_RUNE_T_	int			      /* rune_t */
+
+
+/*
+ * We describe off_t here so its declaration can be visible to
+ * stdio without pulling in all of <sys/type.h>, thus appeasing ANSI.
+ */
+#define _BSD_OFF_T_	long long		/* file offset */
 
 #endif	/* _ANSI_H_ */
